@@ -5,7 +5,7 @@ pipeline {
 	
         stage('install requirements') {
             steps {
-                sh 'python -m pip install -r app/requirements.txt'
+                sh 'python -m pip install -r app/requirements.txt --user'
             }
         }
         stage('migrate database') {
