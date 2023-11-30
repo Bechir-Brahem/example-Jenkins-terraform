@@ -1,10 +1,21 @@
 /* Requires the Docker Pipeline plugin */
 pipeline {
-    agent { docker { image 'python:3.12.0-alpine3.18' } }
+    agent { docker { image 'python:3.9' } }
     stages {
-        stage('build') {
+	
+        stage('install requirements') {
             steps {
-                sh 'python --version'
+                sh 'python -m pip install -r app/requirements.txt'
+            }
+        }
+        stage('migrate database') {
+            steps {
+                sh 'python app/manage.py migrate'
+            }
+        }
+        stage('run unit tests') {
+            steps {
+                sh 'python app/manage.py test'
             }
         }
     }
