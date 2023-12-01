@@ -7,7 +7,7 @@ pipeline {
             steps {
 	//	sh 'virtualenv venv -p python'
 	//	sh 'source venv/bin/activate'
-                sh 'python -m pip install -Iv --user -r app/requirements.txt'
+                sh 'pip install -r app/requirements.txt'
             }
         }
         stage('migrate database') {
