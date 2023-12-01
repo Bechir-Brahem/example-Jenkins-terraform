@@ -28,7 +28,7 @@ pipeline {
 	steps{
 		sh 'echo "Y" | gcloud auth configure-docker europe-west1-docker.pkg.dev'
 		sh 'docker tag django-app  europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app'
-		sh 'docker push django-app europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app'		
+		sh 'docker push europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app'		
 }
 }
     }
