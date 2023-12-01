@@ -1,6 +1,6 @@
 /* Requires the Docker Pipeline plugin */
 pipeline {
-    agent { docker { image 'python:3.9' } }
+    agent { docker { image 'python:3.9-alpine' } }
     stages {
 	
         stage('install requirements') {
