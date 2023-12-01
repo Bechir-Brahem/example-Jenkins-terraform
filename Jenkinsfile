@@ -1,6 +1,11 @@
 /* Requires the Docker Pipeline plugin */
 pipeline {
     agent any
+    environment {
+        CLOUDSDK_CORE_PROJECT='tp-4-gl5'
+        CLIENT_EMAIL='jenkins-gcloud@tp-4-gl5.iam.gserviceaccount.com'
+        GCLOUD_CREDS=credentials('gcloud-creds')
+      }
     stages {
 	
         stage('install dependencies and test application') {
@@ -19,5 +24,12 @@ pipeline {
 	        sh 'docker build -t django-app .'
 	    }
 	}
+	stage('push docker image'){
+	steps{
+		sh 'gcloud auth configure-docker europe-west1-docker.pkg.dev'
+		sh 'docker tag django-app  http://europe-west1-docker.pkg.dev/tp-4-gl5/django-app'
+		sh 'docker push django-app europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app'		
+}
+}
     }
 }
