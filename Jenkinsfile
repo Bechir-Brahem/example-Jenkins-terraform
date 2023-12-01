@@ -34,7 +34,7 @@ pipeline {
        }
        stage('deploy to cloud run'){
        	steps{
-		sh 'gcloud run deploy django-app --image=europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app:latest'
+		sh 'gcloud run deploy django-app --region=europe-west1 --image=europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app:latest '
        	}
        }
 
