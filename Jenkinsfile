@@ -26,7 +26,7 @@ pipeline {
 	}
 	stage('push docker image'){
 	steps{
-		sh 'gcloud auth configure-docker europe-west1-docker.pkg.dev'
+		sh 'echo "Y" | gcloud auth configure-docker europe-west1-docker.pkg.dev'
 		sh 'docker tag django-app  http://europe-west1-docker.pkg.dev/tp-4-gl5/django-app'
 		sh 'docker push django-app europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app'		
 }
