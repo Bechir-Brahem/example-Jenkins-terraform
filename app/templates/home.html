@@ -3,6 +3,7 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
+TEST
     {% if user.is_authenticated %}
         Hi {{ user.username }}! You are {{ user.age }} years old.
         <p><a href="{% url 'logout' %}">Log Out</a></p>
