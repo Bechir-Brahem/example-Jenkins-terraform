@@ -5,6 +5,9 @@ pipeline {
 	
         stage('install requirements') {
             steps {
+		sh 'id'
+		sh 'pwd'
+		sh 'll'
 	//	sh 'virtualenv venv -p python'
 	//	sh 'source venv/bin/activate'
                 sh 'pip install -r app/requirements.txt'
