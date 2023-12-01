@@ -25,12 +25,18 @@ pipeline {
 	    }
 	}
 	stage('push docker image'){
-	steps{
-		sh 'gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"'
-		sh 'echo "Y" | gcloud auth configure-docker europe-west1-docker.pkg.dev'
-		sh 'docker tag django-app  europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app:latest'
-		sh 'docker push europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app:latest'		
-}
-}
+		steps{
+			sh 'gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"'
+			sh 'echo "Y" | gcloud auth configure-docker europe-west1-docker.pkg.dev'
+			sh 'docker tag django-app  europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app:latest'
+			sh 'docker push europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app:latest'		
+		}
+       }
+       stage('deploy to cloud run'){
+       	steps{
+		sh 'gcloud run deploy django-app --image=europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app:latest'
+       	}
+       }
+
     }
 }
