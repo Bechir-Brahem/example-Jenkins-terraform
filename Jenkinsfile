@@ -21,5 +21,10 @@ pipeline {
                 sh 'python app/manage.py test'
             }
         }
+	stage('build docker image){
+		steps{
+			sh 'docker build -t django-app .'
+}
+}
     }
 }
