@@ -28,8 +28,8 @@ pipeline {
 	steps{
 		sh 'gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"'
 		sh 'echo "Y" | gcloud auth configure-docker europe-west1-docker.pkg.dev'
-		sh 'docker tag django-app  europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app'
-		sh 'docker push europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app'		
+		sh 'docker tag django-app  europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app:latest'
+		sh 'docker push europe-west1-docker.pkg.dev/tp-4-gl5/django-app/django-app:latest'		
 }
 }
     }
