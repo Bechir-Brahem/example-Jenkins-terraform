@@ -3,10 +3,10 @@ pipeline {
     agent { docker { image 'python:3.9-alpine' } }
     stages {
 	
-        stage('install requirements') {
 	    environment {
 		HOME = "${env.WORKSPACE}"
 	    }
+        stage('install requirements') {
             steps {
                 sh 'pip install -r app/requirements.txt'
             }
