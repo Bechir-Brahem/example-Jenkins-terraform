@@ -47,7 +47,7 @@ jobs:
       - name: Build and Push Docker image
         run: |
           gcloud auth configure-docker
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app-test:latest .
+          docker build -f old-Dockerfile -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app-test:latest .
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app-test:latest
 
       - name: Install Terraform
