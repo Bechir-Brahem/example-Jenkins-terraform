@@ -54,7 +54,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend-config=backend-prod.hcl
         env:
           TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
           TF_VAR_env: test
