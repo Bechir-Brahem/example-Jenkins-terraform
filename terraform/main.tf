@@ -1,8 +1,3 @@
-variable "repo_url" {
-  description = "The URL of the Git repository"
-  type        = string
-}
-
 variable "gcp_project_id" {
   description = "The GCP project ID"
   type        = string
