@@ -3,11 +3,6 @@ variable "gcp_project_id" {
   type        = string
 }
 
-provider "google" {
-  project = var.gcp_project_id
-  region  = "us-central1"
-}
-
 resource "google_cloud_run_service" "default" {
   name     = "django-app-service-test"
   location = "us-central1"
