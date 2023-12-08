@@ -1,6 +1,6 @@
 resource "google_cloud_run_v2_service" "default" {
   name     = "django-app"
-  location = var.region
+  location = "europe-west3"
   client   = "terraform"
   project  = var.project_id
 
