@@ -1,9 +1,9 @@
-name: CI/CD - Production
+name: CI/CD - Test
 
 on:
   push:
     branches:
-      - production # Set to your default branch
+      - test # Set to your default branch
 
 jobs:
   test:
@@ -16,15 +16,17 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.10' # Set this to your Python version
+          python-version: "3.10" # Set this to your Python version
 
       - name: Install Dependencies
         run: |
+          cd app
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run Django Tests
         run: |
+          cd app
           python manage.py test
 
   deploy:
@@ -45,8 +47,8 @@ jobs:
       - name: Build and Push Docker image
         run: |
           gcloud auth configure-docker
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app-test:latest .
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app-test:latest
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app-production:latest .
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app-production:latest
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v1
@@ -55,14 +57,23 @@ jobs:
         run: terraform init
         env:
           TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+          TF_VAR_env: test
+        working-directory: ./terraform
 
       - name: Terraform Plan
         run: terraform plan
         env:
           TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+          TF_VAR_gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}
+          TF_LOG: DEBUG
+          TF_VAR_env: test
+        working-directory: ./terraform
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
         env:
           TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
           TF_VAR_gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}
+          TF_LOG: DEBUG
+          TF_VAR_env: production
+        working-directory: ./terraform

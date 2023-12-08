@@ -1,12 +1,12 @@
 resource "google_cloud_run_v2_service" "default" {
-  name     = "django-app-test"
+  name     = "django-app-${var.env}"
   location = "europe-west3"
   client   = "terraform"
   project  = var.gcp_project_id
 
   template {
     containers {
-      image = "gcr.io/${var.gcp_project_id}/your-app-test"
+      image = "gcr.io/${var.gcp_project_id}/your-app-${var.env}"
         ports {
           container_port = 8000
         }    

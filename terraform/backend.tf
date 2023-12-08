@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket  = "terraform-state-test-gl5"
+    bucket  = "terraform-state-${var.env}-gl5"
     prefix  = "terraform/state"
   }
 }
