@@ -3,7 +3,7 @@ name: CI/CD - Test
 on:
   push:
     branches:
-      - test # Set to your default branch
+      - production # Set to your default branch
 
 jobs:
   test:
