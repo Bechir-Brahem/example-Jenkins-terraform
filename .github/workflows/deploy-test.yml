@@ -47,7 +47,7 @@ jobs:
       - name: Build and Push Docker image
         run: |
           gcloud auth configure-docker
-          docker build -f old-Dockerfile -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app-test:latest .
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app-test:latest .
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app-test:latest
 
       - name: Install Terraform
@@ -57,14 +57,17 @@ jobs:
         run: terraform init
         env:
           TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+        working-directory: ./terraform
 
       - name: Terraform Plan
         run: terraform plan
         env:
           TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+        working-directory: ./terraform
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
         env:
           TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
           TF_VAR_gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}
+        working-directory: ./terraform
