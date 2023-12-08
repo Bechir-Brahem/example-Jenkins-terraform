@@ -21,7 +21,7 @@ pipeline {
         }
 	stage('build docker image'){
 	    steps {
-	        sh 'docker build -t django-app .'
+	        sh 'docker build -f old-Dockerfile -t django-app .'
 	    }
 	}
 	stage('push docker image'){
