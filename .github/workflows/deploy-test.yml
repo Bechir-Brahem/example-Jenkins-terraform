@@ -60,9 +60,11 @@ jobs:
         working-directory: ./terraform
 
       - name: Terraform Plan
-        run: TF_LOG="DEBUG" terraform plan
+        run: terraform plan
         env:
           TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+          TF_VAR_gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}
+          TF_LOG: DEBUG
         working-directory: ./terraform
 
       - name: Terraform Apply
@@ -70,4 +72,5 @@ jobs:
         env:
           TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
           TF_VAR_gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}
+          TF_LOG: DEBUG
         working-directory: ./terraform
