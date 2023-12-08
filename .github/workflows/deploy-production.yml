@@ -1,0 +1,68 @@
+name: CI/CD - Production
+
+on:
+  push:
+    branches:
+      - production # Set to your default branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10' # Set this to your Python version
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Django Tests
+        run: |
+          python manage.py test
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          export_default_credentials: true
+
+      - name: Build and Push Docker image
+        run: |
+          gcloud auth configure-docker
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app-test:latest .
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app-test:latest
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform init
+        env:
+          TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Terraform Plan
+        run: terraform plan
+        env:
+          TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        env:
+          TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+          TF_VAR_gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}
