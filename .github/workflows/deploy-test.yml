@@ -62,6 +62,5 @@ jobs:
         env:
           TF_VAR_gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
           TF_VAR_gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}
-          TF_LOG: DEBUG
           TF_VAR_env: test
         working-directory: ./terraform
