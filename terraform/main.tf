@@ -1,8 +1,3 @@
-variable "gcp_project_id" {
-  description = "The GCP project ID"
-  type        = string
-}
-
 resource "google_cloud_run_service" "default" {
   name     = "django-app-service-test"
   location = "us-central1"
