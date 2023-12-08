@@ -1,8 +1,8 @@
 resource "google_cloud_run_v2_service" "default" {
-  name     = "django-app"
+  name     = "django-app-test"
   location = "europe-west3"
   client   = "terraform"
-  project  = var.project_id
+  project  = var.gcp_project_id
 
   template {
     containers {
