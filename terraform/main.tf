@@ -1,6 +1,6 @@
 resource "google_cloud_run_service" "default" {
   name     = "django-app-service-test"
-  location = "us-central1"
+  location = "europe-west3"
 
   template {
     spec {
