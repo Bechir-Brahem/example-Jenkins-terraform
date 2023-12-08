@@ -55,8 +55,8 @@ jobs:
 
       - name: Terraform Init, Plan, and Apply
         run: |
+          rm -rf backend-prod.tf
           terraform init
-          terraform workspace new test
           terraform plan
           terraform apply -auto-approve
         env:
